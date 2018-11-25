@@ -2,6 +2,7 @@
 A simple and easy to use app to keep your journal entries in an intersting way.
 
 **What Makes a Good Journaling App**
+
 `
 A paper notebook and pen are fine for journaling, but apps offer more. They give you more context on what you've accomplished and where you might want to go, and let you include photos from your phone or posts from your social media feeds to make the journaling experience more rewarding. Add in reminders and the ability to search your journal entries, and digital journaling is almost a no-brainer.
 `
