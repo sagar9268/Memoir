@@ -28,4 +28,5 @@ Android Studio
 ```
 
 **Communication Channel**
+
 [Gitter Chat](https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
