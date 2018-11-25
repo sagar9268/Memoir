@@ -1,6 +1,8 @@
 # Memoir
 A simple and easy to use app to keep your journal entries in an intersting way.
 
+[![Join the chat at https://gitter.im/pymotivate/Lobby](https://badges.gitter.im/pymotivate/Lobby.svg)](https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
 **What Makes a Good Journaling App**
 
 `
@@ -17,6 +19,13 @@ A paper notebook and pen are fine for journaling, but apps offer more. They give
 
 `Other features that might be important to you include password protection, Markdown support, ability to add more than one photo, automatically adding location and weather, and journaling prompts.
 `
+
+## Requirements
+
+```
+Git
+Android Studio
+```
 
 ##Communication Channel
 https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
