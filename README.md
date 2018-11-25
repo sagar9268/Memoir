@@ -17,5 +17,6 @@ A paper notebook and pen are fine for journaling, but apps offer more. They give
 
 `Other features that might be important to you include password protection, Markdown support, ability to add more than one photo, automatically adding location and weather, and journaling prompts.
 `
-###Communication Channel
+
+##Communication Channel
 https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
