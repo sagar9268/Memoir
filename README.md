@@ -1,7 +1,7 @@
 # Memoir
 A simple and easy to use app to keep your journal entries in an intersting way.
 
-[![Join the chat at](https:badges.gitter.im/Memoir123/Lobby.svg)](https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![Gitter](https:badges.gitter.im/Memoir123/Lobby.svg)](https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
 **What Makes a Good Journaling App**
 
