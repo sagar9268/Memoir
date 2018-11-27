@@ -1,5 +1,5 @@
 # Memoir
-A simple and easy to use app to keep your journal entries in an intersting way.
+A simple and easy to use app to keep your journal entries in an interesting way.
 
 [![Gitter](https://badges.gitter.im/gmonetix/BooksPivot-KWOC.svg)](https://gitter.im/Memoir123/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
