@@ -3,6 +3,18 @@
     <string name="action_settings">Settings</string>
     <string name="calendar">Calendar</string>
     <string name="home">Home</string>
+    <string name="journal_image">Journal Entry Image</string>
+    <string name="share">Share</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="write_about_yourself">Write about yourself</string>
+    <string name="enter_your_bio">Enter your bio</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="text_view">Lorem Ipsum</string>
+    <string name="gender">Gender</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="name">Name</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
