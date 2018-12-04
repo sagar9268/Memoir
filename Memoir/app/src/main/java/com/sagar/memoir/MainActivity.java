@@ -125,4 +125,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void onProfileSettingsSaveFragmentInteraction()
+    {
+        Toast.makeText(MainActivity.this,"Profile Updated!", Toast.LENGTH_SHORT).show();
+    }
 }

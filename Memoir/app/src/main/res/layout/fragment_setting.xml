@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/gender"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:text="@string/date_of_birth"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,8 +124,8 @@
                 android:id="@+id/editTextName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:visibility="invisible"
@@ -180,13 +180,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/imageViewPerson"
                 android:layout_width="108dp"
                 android:layout_height="102dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="17dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:src="@mipmap/ic_launcher_round"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -231,6 +231,18 @@
                 app:layout_constraintEnd_toEndOf="@+id/editTextBio"
                 app:layout_constraintStart_toStartOf="@+id/editTextBio"
                 app:layout_constraintTop_toTopOf="@+id/editTextBio" />
+
+            <Button
+                android:id="@+id/buttonImageChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/change_pic_button"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewPerson"
+                app:layout_constraintEnd_toEndOf="@+id/divider"
+                app:layout_constraintStart_toEndOf="@+id/imageViewPerson" />
 
         </android.support.constraint.ConstraintLayout>
 

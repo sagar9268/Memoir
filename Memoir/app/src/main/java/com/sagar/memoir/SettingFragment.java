@@ -1,12 +1,31 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import static android.app.Activity.RESULT_OK;
+import static android.graphics.Color.GRAY;
+import static android.text.InputFilter.*;
 
 
 /**
@@ -26,6 +45,24 @@ public class SettingFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public static final int DEFAULT_BIO_LENGTH_LIMIT = 1000;
+    public static final int RC_PHOTO_PICKER = 1;
+    Button editProfileButton;
+    Button saveProfileButton;
+    Button profilePicChangeButton;
+    ImageView profilePic;
+
+    private TextView mNameTitle;
+    private TextView mNameEditTextView;
+    private TextView mGenderEditTextView;
+    private TextView mDOBEditTextView;
+    private TextView mBioEditTextView;
+
+    private EditText mNameEdit;
+    private EditText mBioEdit;
+
+    public static final String USER_PREFS = "mPrefsFile";
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,15 +101,113 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        //Initialize reference to views
+        mNameTitle = (TextView) rootView.findViewById(R.id.textViewTitleName);
+        mNameEditTextView = (TextView) rootView.findViewById(R.id.textViewName);
+        mDOBEditTextView = (TextView) rootView.findViewById(R.id.textViewDOB);
+        mGenderEditTextView = (TextView) rootView.findViewById(R.id.textViewGender);
+        mBioEditTextView = (TextView) rootView.findViewById(R.id.textViewBio);
+
+        mNameEdit = (EditText) rootView.findViewById(R.id.editTextName);
+        mBioEdit = (EditText) rootView.findViewById(R.id.editTextBio);
+
+        editProfileButton = (Button) rootView.findViewById(R.id.buttonEditProfile);
+        saveProfileButton = (Button) rootView.findViewById(R.id.buttonSaveProfile);
+        profilePicChangeButton = (Button) rootView.findViewById(R.id.buttonImageChange);
+        profilePic = (ImageView) rootView.findViewById(R.id.imageViewPerson);
+
+        //setting text to text views
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        mNameTitle.setText(preferences.getString("sharedName", null));
+        mNameEditTextView.setText(preferences.getString("sharedName", null));
+        mGenderEditTextView.setText(preferences.getString("sharedGender", null));
+        mDOBEditTextView.setText(preferences.getString("sharedDob", null));
+        mBioEditTextView.setText(preferences.getString("sharedBio", null));
+
+        //setting profile pic
+        if(preferences.getString("sharedProfilePic",null) != null)
+        {
+            profilePic.setImageURI(Uri.parse(preferences.getString("sharedProfilePic",null)));
+        }
+
+        //Enable save button when there's text change and check the length of text
+        mNameEdit.addTextChangedListener(watcher);
+        mBioEdit.addTextChangedListener(watcher);
+
+        mBioEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(DEFAULT_BIO_LENGTH_LIMIT)});
+
+        //Layout related code
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change visibility
+                mNameEditTextView.setVisibility(View.INVISIBLE);
+                mBioEditTextView.setVisibility(View.INVISIBLE);
+                editProfileButton.setVisibility(View.INVISIBLE);
+
+                //Change visibility
+                mNameEdit.setVisibility(View.VISIBLE);
+                mBioEdit.setVisibility(View.VISIBLE);
+                saveProfileButton.setVisibility(View.VISIBLE);
+
+                //Set text to edit
+                mNameEdit.setText(mNameEditTextView.getText().toString());
+                mBioEdit.setText(mBioEditTextView.getText().toString());
+            }
+        });
+
+        final SharedPreferences pref = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        saveProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change visibility
+                mNameEditTextView.setVisibility(View.VISIBLE);
+                mBioEditTextView.setVisibility(View.VISIBLE);
+                editProfileButton.setVisibility(View.VISIBLE);
+
+                //Change visibility
+                mNameEdit.setVisibility(View.INVISIBLE);
+                mBioEdit.setVisibility(View.INVISIBLE);
+                saveProfileButton.setVisibility(View.INVISIBLE);
+
+                //set text to text views
+                mNameTitle.setText(mNameEdit.getText().toString());
+                mNameEditTextView.setText(mNameEdit.getText().toString());
+                mBioEditTextView.setText(mBioEdit.getText().toString());
+
+                //updating shared preferences
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("sharedName", mNameEdit.getText().toString());
+                edit.putString("sharedBio", mBioEdit.getText().toString());
+                edit.apply();
+
+                mListener.onProfileSettingsSaveFragmentInteraction();
+            }
+        });
+
+        profilePicChangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Fire an intent to show an image picker
+                Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(intent,"Complete action using"),RC_PHOTO_PICKER);
+            }
+        });
+
+        return rootView;
     }
 
+    /*
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+    */
 
     @Override
     public void onAttach(Context context) {
@@ -91,6 +226,60 @@ public class SettingFragment extends Fragment {
         mListener = null;
     }
 
+    TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //if(s.toString().trim().length()>0){
+            //  saveProfileButton.setEnabled(true);
+            //} else {
+            //  saveProfileButton.setEnabled(false);
+            //}
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(s.toString().length()<3) {
+                saveProfileButton.setEnabled(false);
+                saveProfileButton.setBackgroundColor(GRAY);
+            } else {
+                saveProfileButton.setEnabled(true);
+            }
+        }
+
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data != null)
+        {
+            Uri selectedImage = data.getData();
+            //String path = getPathFromURI(selectedImage);
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = this.getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            //updating shared preferences
+            SharedPreferences pref = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString("sharedProfilePic", picturePath);
+            edit.apply();
+
+            profilePic.setImageURI(Uri.parse(picturePath));
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -103,6 +292,6 @@ public class SettingFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onProfileSettingsSaveFragmentInteraction();
     }
 }
