@@ -127,6 +127,8 @@ public class SettingFragment extends Fragment {
         mDOBEditTextView.setText(preferences.getString("sharedDob", null));
         mBioEditTextView.setText(preferences.getString("sharedBio", null));
 
+        profilePicChangeButton.setVisibility(View.INVISIBLE);
+
         //setting profile pic
         if(preferences.getString("sharedProfilePic",null) != null)
         {
@@ -144,10 +146,11 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //change visibility
+
+                profilePicChangeButton.setVisibility(View.VISIBLE);
                 mNameEditTextView.setVisibility(View.INVISIBLE);
                 mBioEditTextView.setVisibility(View.INVISIBLE);
                 editProfileButton.setVisibility(View.INVISIBLE);
-
                 //Change visibility
                 mNameEdit.setVisibility(View.VISIBLE);
                 mBioEdit.setVisibility(View.VISIBLE);
@@ -165,6 +168,8 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //change visibility
+
+                profilePicChangeButton.setVisibility(View.INVISIBLE);
                 mNameEditTextView.setVisibility(View.VISIBLE);
                 mBioEditTextView.setVisibility(View.VISIBLE);
                 editProfileButton.setVisibility(View.VISIBLE);
