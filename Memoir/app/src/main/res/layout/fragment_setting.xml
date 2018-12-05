@@ -35,20 +35,16 @@
                 android:id="@+id/buttonEditProfile"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="100dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:enabled="true"
                 android:text="@string/edit_profile"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/divider2"
                 app:layout_constraintTop_toBottomOf="@+id/divider2"
-                app:layout_constraintVertical_bias="0.502" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textViewGender"
@@ -98,7 +94,7 @@
             <View
                 android:id="@+id/divider2"
                 android:layout_width="368dp"
-                android:layout_height="11dp"
+                android:layout_height="2dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
@@ -137,12 +133,10 @@
                 android:id="@+id/buttonSaveProfile"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/colorAccent"
                 android:text="@string/save_profile"
                 android:textColor="@color/white"
@@ -150,7 +144,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/buttonEditProfile"
                 app:layout_constraintEnd_toEndOf="@+id/buttonEditProfile"
                 app:layout_constraintStart_toStartOf="@+id/buttonEditProfile"
-                app:layout_constraintTop_toTopOf="@+id/buttonEditProfile" />
+                app:layout_constraintTop_toTopOf="@+id/buttonEditProfile"
+                app:layout_constraintVertical_bias="0.0" />
 
             <View
                 android:id="@+id/divider"
