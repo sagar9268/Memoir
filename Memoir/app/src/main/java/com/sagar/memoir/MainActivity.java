@@ -24,7 +24,7 @@ import android.support.v4.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, CalendarFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener, MainActivityFragment.OnFragmentInteractionListener {
 
     boolean doubleBackToExitPressedOnce = false;
-
+    BottomNavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         loadFragment(new MainActivityFragment());
 
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+        navigation.setSelectedItemId(R.id.navigation_home);//set default to home
 
         //Check for permissions
         if (Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP&&ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -83,14 +84,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //noinspection SimplifiableIfStatement
         if (id == R.id.navigation_settings) {
             fragment = new SettingFragment();
+            navigation.setSelectedItemId(R.id.navigation_settings);//update bottom navigation menu
+
             return loadFragment(fragment);
         }
         if (id == R.id.navigation_home) {
             fragment = new MainActivityFragment();
+            navigation.setSelectedItemId(R.id.navigation_home);
             return loadFragment(fragment);
         }
         if (id == R.id.navigation_calendar) {
             fragment = new CalendarFragment();
+            navigation.setSelectedItemId(R.id.navigation_calendar);
             return loadFragment(fragment);
         }
 
