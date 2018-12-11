@@ -1,5 +1,6 @@
 package com.sagar.memoir;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,13 +17,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 import static android.graphics.Color.GRAY;
@@ -62,6 +71,11 @@ public class SettingFragment extends Fragment {
 
     private EditText mNameEdit;
     private EditText mBioEdit;
+    private EditText mDOBEdit;
+
+    private Spinner editGender;
+
+    private String mGender;
 
     public static final String USER_PREFS = "mPrefsFile";
 
@@ -113,11 +127,14 @@ public class SettingFragment extends Fragment {
 
         mNameEdit = (EditText) rootView.findViewById(R.id.editTextName);
         mBioEdit = (EditText) rootView.findViewById(R.id.editTextBio);
+        mDOBEdit = (EditText) rootView.findViewById(R.id.editDOB);
 
         editProfileButton = (Button) rootView.findViewById(R.id.buttonEditProfile);
         saveProfileButton = (Button) rootView.findViewById(R.id.buttonSaveProfile);
         profilePicChangeButton = (Button) rootView.findViewById(R.id.buttonImageChange);
         profilePic = (ImageView) rootView.findViewById(R.id.imageViewPerson);
+
+        editGender = (Spinner) rootView.findViewById(R.id.spinnerGender);
 
         //setting text to text views
         SharedPreferences preferences = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -135,6 +152,13 @@ public class SettingFragment extends Fragment {
             profilePic.setImageURI(Uri.parse(preferences.getString("sharedProfilePic",null)));
         }
 
+        //Setting up Gender spinner
+        setUpSpinner();
+
+        //Setting up Date Picker
+        setUpPicker();
+
+
         //Enable save button when there's text change and check the length of text
         mNameEdit.addTextChangedListener(watcher);
         mBioEdit.addTextChangedListener(watcher);
@@ -151,14 +175,23 @@ public class SettingFragment extends Fragment {
                 mNameEditTextView.setVisibility(View.INVISIBLE);
                 mBioEditTextView.setVisibility(View.INVISIBLE);
                 editProfileButton.setVisibility(View.INVISIBLE);
+                mGenderEditTextView.setVisibility(View.INVISIBLE);
+                mDOBEditTextView.setVisibility(View.INVISIBLE);
+
                 //Change visibility
                 mNameEdit.setVisibility(View.VISIBLE);
                 mBioEdit.setVisibility(View.VISIBLE);
                 saveProfileButton.setVisibility(View.VISIBLE);
+                editGender.setVisibility(View.VISIBLE);
+                mDOBEdit.setVisibility(View.VISIBLE);
 
                 //Set text to edit
                 mNameEdit.setText(mNameEditTextView.getText().toString());
                 mBioEdit.setText(mBioEditTextView.getText().toString());
+                editGender.setSelection(((ArrayAdapter)editGender.getAdapter()).getPosition(mGenderEditTextView.getText().toString()));
+                mDOBEdit.setText(mDOBEditTextView.getText().toString());
+
+
             }
         });
 
@@ -173,21 +206,32 @@ public class SettingFragment extends Fragment {
                 mNameEditTextView.setVisibility(View.VISIBLE);
                 mBioEditTextView.setVisibility(View.VISIBLE);
                 editProfileButton.setVisibility(View.VISIBLE);
+                mGenderEditTextView.setVisibility(View.VISIBLE);
+                mDOBEditTextView.setVisibility(View.VISIBLE);
 
                 //Change visibility
                 mNameEdit.setVisibility(View.INVISIBLE);
                 mBioEdit.setVisibility(View.INVISIBLE);
                 saveProfileButton.setVisibility(View.INVISIBLE);
+                editGender.setVisibility(View.INVISIBLE);
+                mDOBEdit.setVisibility(View.INVISIBLE);
+
+
 
                 //set text to text views
                 mNameTitle.setText(mNameEdit.getText().toString());
                 mNameEditTextView.setText(mNameEdit.getText().toString());
                 mBioEditTextView.setText(mBioEdit.getText().toString());
+                mGenderEditTextView.setText(mGender);
+                mDOBEditTextView.setText(mDOBEdit.getText().toString());
+
 
                 //updating shared preferences
                 SharedPreferences.Editor edit = pref.edit();
                 edit.putString("sharedName", mNameEdit.getText().toString());
                 edit.putString("sharedBio", mBioEdit.getText().toString());
+                edit.putString("sharedGender",mGender);
+                edit.putString("sharedDob",mDOBEdit.getText().toString());
                 edit.apply();
 
                 mListener.onProfileSettingsSaveFragmentInteraction();
@@ -204,6 +248,49 @@ public class SettingFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void setUpPicker() {
+        final Calendar calendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DATE,day);
+                String myFormat = "dd MMM yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                mDOBEdit.setText(sdf.format(calendar.getTime()));
+            }
+        };
+
+        mDOBEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getContext(),date,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DATE)).show();
+                saveProfileButton.setEnabled(true);
+            }
+        });
+    }
+
+    private void setUpSpinner() {
+        ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(getContext(),R.array.array_gender_options,android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editGender.setAdapter(genderAdapter);
+        editGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mGender = (String) editGender.getItemAtPosition(i);
+                saveProfileButton.setEnabled(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                mGender = "Others";
+            }
+        });
     }
 
     /*
@@ -225,6 +312,8 @@ public class SettingFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
+
 
     @Override
     public void onDetach() {

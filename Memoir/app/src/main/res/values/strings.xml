@@ -15,6 +15,9 @@
     <string name="gender">Gender</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="name">Name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="others">Others</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
