@@ -34,7 +34,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
+import static android.graphics.Color.BLACK;
 import static android.graphics.Color.GRAY;
+import static android.graphics.Color.WHITE;
 import static android.text.InputFilter.*;
 
 
@@ -158,7 +160,6 @@ public class SettingFragment extends Fragment {
         //Setting up Date Picker
         setUpPicker();
 
-
         //Enable save button when there's text change and check the length of text
         mNameEdit.addTextChangedListener(watcher);
         mBioEdit.addTextChangedListener(watcher);
@@ -169,8 +170,8 @@ public class SettingFragment extends Fragment {
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //change visibility
 
+                //change visibility
                 profilePicChangeButton.setVisibility(View.VISIBLE);
                 mNameEditTextView.setVisibility(View.INVISIBLE);
                 mBioEditTextView.setVisibility(View.INVISIBLE);
@@ -200,8 +201,8 @@ public class SettingFragment extends Fragment {
         saveProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //change visibility
 
+                //change visibility
                 profilePicChangeButton.setVisibility(View.INVISIBLE);
                 mNameEditTextView.setVisibility(View.VISIBLE);
                 mBioEditTextView.setVisibility(View.VISIBLE);
@@ -216,15 +217,12 @@ public class SettingFragment extends Fragment {
                 editGender.setVisibility(View.INVISIBLE);
                 mDOBEdit.setVisibility(View.INVISIBLE);
 
-
-
                 //set text to text views
                 mNameTitle.setText(mNameEdit.getText().toString());
                 mNameEditTextView.setText(mNameEdit.getText().toString());
                 mBioEditTextView.setText(mBioEdit.getText().toString());
                 mGenderEditTextView.setText(mGender);
                 mDOBEditTextView.setText(mDOBEdit.getText().toString());
-
 
                 //updating shared preferences
                 SharedPreferences.Editor edit = pref.edit();
@@ -271,6 +269,8 @@ public class SettingFragment extends Fragment {
                 new DatePickerDialog(getContext(),date,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DATE)).show();
                 saveProfileButton.setEnabled(true);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
+                saveProfileButton.setTextColor(BLACK);
             }
         });
     }
@@ -284,6 +284,8 @@ public class SettingFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 mGender = (String) editGender.getItemAtPosition(i);
                 saveProfileButton.setEnabled(true);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
+                saveProfileButton.setTextColor(BLACK);
             }
 
             @Override
@@ -341,8 +343,11 @@ public class SettingFragment extends Fragment {
             if(s.toString().length()<3) {
                 saveProfileButton.setEnabled(false);
                 saveProfileButton.setBackgroundColor(GRAY);
+                saveProfileButton.setTextColor(WHITE);
             } else {
                 saveProfileButton.setEnabled(true);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
+                saveProfileButton.setTextColor(BLACK);
             }
         }
 

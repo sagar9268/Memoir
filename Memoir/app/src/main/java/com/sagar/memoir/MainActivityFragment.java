@@ -13,11 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -50,6 +54,24 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    //Comparator for Sorting
+    static final Comparator<Card> CARD_COMPARATOR =
+            new Comparator<Card>() {
+                public int compare(Card card1, Card card2) {
+                    String stringDate1 = card1.getJournalDate();
+                    String stringDate2 = card2.getJournalDate();
+                    DateFormat format = new SimpleDateFormat("E, MMM d, yyyy");
+                    try {
+                        Date date1 = (Date)format.parse(stringDate1);
+                        Date date2 = (Date)format.parse(stringDate2);
+                        return date2.compareTo(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return 0;
+                }
+            };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +84,8 @@ public class MainActivityFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        //prepare random cards for checking
         prepareCards();
 
         return rootView;
@@ -103,18 +127,31 @@ public class MainActivityFragment extends Fragment {
                 R.drawable.album11};
         */
 
-        //getting current date to display
-        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
+        //getting random date to display
+        long MAX = 1000000000;
+        Random rnd = new Random();
+        String randomDate = new SimpleDateFormat("E, MMM d, yyyy",
+                Locale.getDefault()).format(new Date(Math.abs(System.currentTimeMillis() - rnd.nextLong()%MAX)));
+
+
         //creating an object of card class
-        Card a = new Card(currentDate,"Hello World !",R.drawable.test_image);
+        Card a = new Card(randomDate,"Hello World !",R.drawable.test_image);
         cardList.add(a);
 
-        a = new Card(currentDate,"Hi there",R.drawable.test_image);
+        randomDate = new SimpleDateFormat("E, MMM d, yyyy",
+                Locale.getDefault()).format(new Date(Math.abs(System.currentTimeMillis() - rnd.nextLong()%MAX)));
+
+        a = new Card(randomDate,"Hi there",R.drawable.test_image);
         cardList.add(a);
 
-        a = new Card(currentDate,"It's my first journal entry.",R.drawable.test_image);
+        randomDate = new SimpleDateFormat("E, MMM d, yyyy",
+                Locale.getDefault()).format(new Date(Math.abs(System.currentTimeMillis() - rnd.nextLong()%MAX)));
+
+        a = new Card(randomDate,"It's my first journal entry.",R.drawable.test_image);
         cardList.add(a);
 
+        //Sorting the cards
+        Collections.sort(cardList,CARD_COMPARATOR);
 
         adapter.notifyDataSetChanged();
     }
