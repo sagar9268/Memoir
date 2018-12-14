@@ -1,8 +1,10 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,6 +38,7 @@ public class MainActivityFragment extends Fragment {
     private CardsAdapter adapter;
     private List<Card> cardList;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FloatingActionButton mFloatingActionButton;
 
     private OnFragmentInteractionListener mListener;
     public MainActivityFragment() {
@@ -56,6 +59,15 @@ public class MainActivityFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
         //initialize reference to views
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionAddJournalButton);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), JournalEntryActivity.class);
+                startActivity(i);
+            }
+        });
+
         cardList = new ArrayList<>();
         adapter = new CardsAdapter(this.getActivity(), cardList);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -106,13 +118,13 @@ public class MainActivityFragment extends Fragment {
         //getting current date to display
         String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
         //creating an object of card class
-        Card a = new Card(currentDate,"Hello World !",R.drawable.test_image);
+        Card a = new Card(1,currentDate,"Hello World !",R.drawable.test_image);
         cardList.add(a);
 
-        a = new Card(currentDate,"Hi there",R.drawable.test_image);
+        a = new Card(2,currentDate,"Hi there",R.drawable.test_image);
         cardList.add(a);
 
-        a = new Card(currentDate,"It's my first journal entry.",R.drawable.test_image);
+        a = new Card(3,currentDate,"It's my first journal entry.",R.drawable.test_image);
         cardList.add(a);
 
 
