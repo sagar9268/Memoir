@@ -1,12 +1,16 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
 
 /**
@@ -64,7 +68,17 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+        View rootveiw = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        CalendarView calendar = (CalendarView) rootveiw.findViewById(R.id.calendarView);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+
+            }
+        });
+
+        return rootveiw;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
