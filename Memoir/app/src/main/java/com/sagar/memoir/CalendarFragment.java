@@ -68,9 +68,9 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootveiw = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        CalendarView calendar = (CalendarView) rootveiw.findViewById(R.id.calendarView);
+        CalendarView calendar = (CalendarView) rootView.findViewById(R.id.calendarView);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
@@ -78,7 +78,7 @@ public class CalendarFragment extends Fragment {
             }
         });
 
-        return rootveiw;
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

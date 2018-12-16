@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/month"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="casual"
-    android:gravity="center"
-    android:textSize="32sp"
-    android:textStyle="bold"
-    android:padding="16dp"
-    tools:text="December">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-</TextView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/monthCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="20dp">
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="32sp"
+            tools:text="December">
+
+        </TextView>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
