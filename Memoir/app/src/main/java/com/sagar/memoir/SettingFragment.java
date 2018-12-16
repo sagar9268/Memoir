@@ -269,8 +269,8 @@ public class SettingFragment extends Fragment {
                 new DatePickerDialog(getContext(),date,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DATE)).show();
                 saveProfileButton.setEnabled(true);
-                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
-                saveProfileButton.setTextColor(BLACK);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                saveProfileButton.setTextColor(getResources().getColor(R.color.white));
             }
         });
     }
@@ -284,8 +284,8 @@ public class SettingFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 mGender = (String) editGender.getItemAtPosition(i);
                 saveProfileButton.setEnabled(true);
-                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
-                saveProfileButton.setTextColor(BLACK);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                saveProfileButton.setTextColor(getResources().getColor(R.color.white));
             }
 
             @Override
@@ -342,12 +342,12 @@ public class SettingFragment extends Fragment {
         public void afterTextChanged(Editable s) {
             if(s.toString().length()<3) {
                 saveProfileButton.setEnabled(false);
-                saveProfileButton.setBackgroundColor(GRAY);
-                saveProfileButton.setTextColor(WHITE);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
+                saveProfileButton.setTextColor(getResources().getColor(R.color.black));
             } else {
                 saveProfileButton.setEnabled(true);
-                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.grey));
-                saveProfileButton.setTextColor(BLACK);
+                saveProfileButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                saveProfileButton.setTextColor(getResources().getColor(R.color.white));
             }
         }
 
