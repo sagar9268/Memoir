@@ -1,21 +1,25 @@
 package com.sagar.memoir;
 
 import android.content.Context;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,8 +38,10 @@ public class MainActivityFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CardsAdapter adapter;
-    private List<Card> cardList;
+    private List<Object> cardList;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    HashMap<String,Date> map;
 
     private OnFragmentInteractionListener mListener;
     public MainActivityFragment() {
@@ -50,6 +56,32 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+    //Comparator for Sorting
+    static final Comparator<Object> CARD_COMPARATOR =
+            new Comparator<Object>() {
+                public int compare(Object card1, Object card2) {
+                    String stringDate1;
+                    String stringDate2;
+                    if(card1 instanceof Card)
+                        stringDate1 = ((Card) card1).getJournalDate();
+                    else
+                        stringDate1 = ((MonthCard) card1).getJournalDate();
+                    if(card2 instanceof Card)
+                        stringDate2 = ((Card) card2).getJournalDate();
+                    else
+                        stringDate2 = ((MonthCard) card2).getJournalDate();
+                    DateFormat format = new SimpleDateFormat("E, MMM d, yyyy");
+                    try {
+                        Date date1 = (Date)format.parse(stringDate1);
+                        Date date2 = (Date)format.parse(stringDate2);
+                        return date2.compareTo(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return 0;
+                }
+            };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,13 +89,22 @@ public class MainActivityFragment extends Fragment {
         //initialize reference to views
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         cardList = new ArrayList<>();
+        map = new HashMap<>();
         adapter = new CardsAdapter(this.getActivity(), cardList);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
-        prepareCards();
 
+        //prepare random cards for checking
+        try {
+            prepareCards();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Sorting the cards
+        Collections.sort(cardList,CARD_COMPARATOR);
         return rootView;
     }
 
@@ -87,7 +128,7 @@ public class MainActivityFragment extends Fragment {
     /**
      * Adding few cards for testing
      */
-    private void prepareCards() {
+    private void prepareCards() throws ParseException {
         /*
         int[] covers = new int[]{
                 R.drawable.album1,
@@ -103,20 +144,51 @@ public class MainActivityFragment extends Fragment {
                 R.drawable.album11};
         */
 
-        //getting current date to display
-        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
+
+        DateFormat formatter = new SimpleDateFormat("E, MMM d, yyyy",Locale.getDefault());
+        String entryDate;
+
         //creating an object of card class
-        Card a = new Card(currentDate,"Hello World !",R.drawable.test_image);
-        cardList.add(a);
+        Card a;
 
-        a = new Card(currentDate,"Hi there",R.drawable.test_image);
-        cardList.add(a);
+        //Creating sample cards
+        entryDate = formatter.format(new Date());
+        a = new Card(entryDate,"Hello World !",R.drawable.test_image);
+        addCard(a);
 
-        a = new Card(currentDate,"It's my first journal entry.",R.drawable.test_image);
-        cardList.add(a);
+        entryDate = "Thu, Nov 1, 2018";
+        a = new Card(entryDate,"Hi there",R.drawable.test_image);
+        addCard(a);
 
+        entryDate = "Mon, Dec 17, 2018";
+        a = new Card(entryDate,"It's my first journal entry.",R.drawable.test_image);
+        addCard(a);
 
         adapter.notifyDataSetChanged();
+    }
+
+    private void addCard(Card card) throws ParseException {
+        String stringDate = card.getJournalDate();
+        DateFormat formatter = new SimpleDateFormat("E, MMM d, yyyy");
+        DateFormat monthFormatter =new SimpleDateFormat("MMMM");
+        DateFormat yearFormatter = new SimpleDateFormat("MMMM yyyy");
+        Date date = (Date)formatter.parse(stringDate);
+        String month = monthFormatter.format(date);
+        String monthWithYear = yearFormatter.format(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        date = calendar.getTime();
+        String lastDate = formatter.format(date);
+
+        //Checking if entry has been made this month
+        if(!map.containsKey(monthWithYear)) {
+            map.put(monthWithYear, date);
+            cardList.add(new MonthCard(lastDate, month));
+        }
+        cardList.add(card);
+
+
     }
 
     public interface OnFragmentInteractionListener {
