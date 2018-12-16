@@ -67,7 +67,7 @@ public class JournalEntryActivity extends AppCompatActivity {
         //getting current date to display
         String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
         mDate.setText(currentDate);
-        
+
     }
 
     TextWatcher watcher = new TextWatcher() {
