@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertJournal(String journal, String date)
+    public long insertJournal(String journal)
     {
         //get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
@@ -50,7 +50,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //id will be inserted automatically, no need to add them
         values.put(Card.COLUMN_JOURNAL, journal);
-        values.put(Card.COLUMN_TIMESTAMP, date);
+        //getting current date to display in journal entry
+        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
+        values.put(Card.COLUMN_TIMESTAMP, currentDate);
         //TODO
         //code to insert images here
         values.put(Card.COLUMN_IMAGE,R.drawable.test_image);

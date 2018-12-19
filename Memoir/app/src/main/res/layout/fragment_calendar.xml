@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,28 +7,29 @@
     android:id="@+id/navigation_calendar"
     tools:context=".CalendarFragment">
 
-    <TextView
-        android:id="@+id/monthView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
-        android:textSize="24dp"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:compactCalendarTextSize="16sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:compactCalendarCurrentDayIndicatorStyle="no_fill_large_indicator"
-        app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
-        app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="false"
-        app:compactCalendarEventIndicatorStyle="fill_large_indicator"
-        android:layout_below="@+id/monthView"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <!-- TODO: Update blank fragment layout -->
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,13 +22,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
 import static android.app.Activity.RESULT_OK;
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.GRAY;
+import static android.graphics.Color.WHITE;
+import static android.text.InputFilter.*;
 
 
 /**
