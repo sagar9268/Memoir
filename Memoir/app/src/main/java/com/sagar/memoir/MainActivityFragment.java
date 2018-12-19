@@ -1,7 +1,9 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -40,6 +42,9 @@ public class MainActivityFragment extends Fragment {
     private CardsAdapter adapter;
     private List<Object> cardList;
     private RecyclerView.LayoutManager mLayoutManager;
+    private FloatingActionButton mFloatingActionButton;
+    private DatabaseHelper db;
+
 
     HashMap<String,Date> map;
 
@@ -64,6 +69,18 @@ public class MainActivityFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         cardList = new ArrayList<>();
         map = new HashMap<>();
+        mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionAddJournalButton);
+        db = new DatabaseHelper(this.getActivity());
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), JournalEntryActivity.class);
+                startActivity(i);
+            }
+        });
+
+        cardList.addAll(db.getAllCards());
         adapter = new CardsAdapter(this.getActivity(), cardList);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -117,27 +134,29 @@ public class MainActivityFragment extends Fragment {
                 R.drawable.album10,
                 R.drawable.album11};
         */
+/*
+        //getting current date to display
+        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
 
 
         DateFormat formatter = new SimpleDateFormat("E, MMM d, yyyy",Locale.getDefault());
         String entryDate;
 
         //creating an object of card class
-        Card a;
+        Card a = new Card(1,currentDate,"Hello World !",R.drawable.test_image);
+        cardList.add(a);
 
-        //Creating sample cards
-        entryDate = formatter.format(new Date());
-        a = new Card(entryDate,"Hello World !",R.drawable.test_image);
-        addCard(a);
+        a = new Card(2,currentDate,"Hi there",R.drawable.test_image);
+        cardList.add(a);
 
-        entryDate = "Thu, Nov 1, 2018";
-        a = new Card(entryDate,"Hi there",R.drawable.test_image);
-        addCard(a);
+        a = new Card(3,currentDate,"It's my first journal entry.",R.drawable.test_image);
+        cardList.add(a);
+
 
         entryDate = "Mon, Dec 17, 2018";
         a = new Card(entryDate,"It's my first journal entry.",R.drawable.test_image);
         addCard(a);
-
+*/
         adapter.notifyDataSetChanged();
     }
 
