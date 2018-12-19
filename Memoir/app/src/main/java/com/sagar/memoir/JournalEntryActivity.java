@@ -29,7 +29,6 @@ public class JournalEntryActivity extends AppCompatActivity {
     private Button mSaveButton;
     private ActionBar mAb;
     private DatabaseHelper db;
-    private List<Card> cardList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +46,6 @@ public class JournalEntryActivity extends AppCompatActivity {
         mAb.setTitle("Memoir");
 
         db = new DatabaseHelper(this);
-        cardList.addAll(db.getAllCards());
-
 
         //Enable save button when there's text change and check the length of text
         mJournal.addTextChangedListener(watcher);
@@ -62,6 +59,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             }
         });
 
+        mSaveButton.setEnabled(false);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

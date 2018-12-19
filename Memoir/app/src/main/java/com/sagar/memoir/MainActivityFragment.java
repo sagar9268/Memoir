@@ -40,11 +40,11 @@ public class MainActivityFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CardsAdapter adapter;
-    private List<Object> cardList;
+    private List<Card> cardList;
+    private List<Object> objectList;
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton mFloatingActionButton;
     private DatabaseHelper db;
-
 
     HashMap<String,Date> map;
 
@@ -67,9 +67,11 @@ public class MainActivityFragment extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_main, container, false);
         //initialize reference to views
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        cardList = new ArrayList<>();
-        map = new HashMap<>();
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionAddJournalButton);
+
+        cardList = new ArrayList<>();
+        objectList = new ArrayList<>();
+        map = new HashMap<>();
         db = new DatabaseHelper(this.getActivity());
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +83,17 @@ public class MainActivityFragment extends Fragment {
         });
 
         cardList.addAll(db.getAllCards());
-        adapter = new CardsAdapter(this.getActivity(), cardList);
+
+        for(Card c : cardList)
+        {
+            try {
+                addCard(c);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        adapter = new CardsAdapter(this.getActivity(), objectList);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -96,6 +108,7 @@ public class MainActivityFragment extends Fragment {
 
         //Sorting the cards
         Collections.sort(cardList,CARD_COMPARATOR);
+
         return rootView;
     }
 
@@ -177,16 +190,15 @@ public class MainActivityFragment extends Fragment {
         //Checking if entry has been made this month
         if(!map.containsKey(monthWithYear)) {
             map.put(monthWithYear, date);
-            cardList.add(new MonthCard(lastDate, month));
+            objectList.add(new MonthCard(lastDate, month));
         }
-        cardList.add(card);
+        objectList.add(card);
 
 
     }
 
     //Comparator for Sorting
-    static final Comparator<Object> CARD_COMPARATOR =
-            new Comparator<Object>() {
+    static final Comparator<Object> CARD_COMPARATOR = new Comparator<Object>() {
                 public int compare(Object card1, Object card2) {
                     String stringDate1;
                     String stringDate2;
@@ -208,7 +220,7 @@ public class MainActivityFragment extends Fragment {
                     }
                     return 0;
                 }
-            };
+    };
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

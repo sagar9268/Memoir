@@ -47,7 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //id and timestamp will be inserted automatically, no need to add them
+
+        //id will be inserted automatically, no need to add them
         values.put(Card.COLUMN_JOURNAL, journal);
         //getting current date to display in journal entry
         String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
@@ -80,6 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getInt(cursor.getColumnIndex(Card.COLUMN_IMAGE)));
         //close the db connection
         cursor.close();
+        db.close();
 
         return card;
     }
