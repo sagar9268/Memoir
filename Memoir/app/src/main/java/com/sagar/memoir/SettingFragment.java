@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,22 +20,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
-import static android.graphics.Color.BLACK;
-import static android.graphics.Color.GRAY;
-import static android.graphics.Color.WHITE;
-import static android.text.InputFilter.*;
 
 
 /**
@@ -63,6 +54,7 @@ public class SettingFragment extends Fragment {
     Button editProfileButton;
     Button saveProfileButton;
     Button profilePicChangeButton;
+    Button cancelChanges;
     ImageView profilePic;
 
     private TextView mNameTitle;
@@ -133,6 +125,7 @@ public class SettingFragment extends Fragment {
 
         editProfileButton = (Button) rootView.findViewById(R.id.buttonEditProfile);
         saveProfileButton = (Button) rootView.findViewById(R.id.buttonSaveProfile);
+        cancelChanges = (Button)rootView.findViewById(R.id.cancel_change);
         profilePicChangeButton = (Button) rootView.findViewById(R.id.buttonImageChange);
         profilePic = (ImageView) rootView.findViewById(R.id.imageViewPerson);
 
@@ -147,6 +140,8 @@ public class SettingFragment extends Fragment {
         mBioEditTextView.setText(preferences.getString("sharedBio", null));
 
         profilePicChangeButton.setVisibility(View.INVISIBLE);
+        cancelChanges.setVisibility(View.INVISIBLE);
+
 
         //setting profile pic
         if(preferences.getString("sharedProfilePic",null) != null)
@@ -178,7 +173,7 @@ public class SettingFragment extends Fragment {
                 editProfileButton.setVisibility(View.INVISIBLE);
                 mGenderEditTextView.setVisibility(View.INVISIBLE);
                 mDOBEditTextView.setVisibility(View.INVISIBLE);
-
+                cancelChanges.setVisibility(View.VISIBLE);
                 //Change visibility
                 mNameEdit.setVisibility(View.VISIBLE);
                 mBioEdit.setVisibility(View.VISIBLE);
@@ -216,6 +211,7 @@ public class SettingFragment extends Fragment {
                 saveProfileButton.setVisibility(View.INVISIBLE);
                 editGender.setVisibility(View.INVISIBLE);
                 mDOBEdit.setVisibility(View.INVISIBLE);
+                cancelChanges.setVisibility(View.INVISIBLE);
 
                 //set text to text views
                 mNameTitle.setText(mNameEdit.getText().toString());
@@ -236,6 +232,36 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        cancelChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //change visibility
+                profilePicChangeButton.setVisibility(View.INVISIBLE);
+                mNameEditTextView.setVisibility(View.VISIBLE);
+                mBioEditTextView.setVisibility(View.VISIBLE);
+                editProfileButton.setVisibility(View.VISIBLE);
+                mGenderEditTextView.setVisibility(View.VISIBLE);
+                mDOBEditTextView.setVisibility(View.VISIBLE);
+
+                //Change visibility
+                mNameEdit.setVisibility(View.INVISIBLE);
+                mBioEdit.setVisibility(View.INVISIBLE);
+                saveProfileButton.setVisibility(View.INVISIBLE);
+                editGender.setVisibility(View.INVISIBLE);
+                mDOBEdit.setVisibility(View.INVISIBLE);
+                cancelChanges.setVisibility(View.INVISIBLE);
+
+                //set text to text views
+                SharedPreferences preferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                mNameTitle.setText(preferences.getString("sharedName", null));
+                mNameEditTextView.setText(preferences.getString("sharedName", null));
+                mGenderEditTextView.setText(preferences.getString("sharedGender", null));
+                mDOBEditTextView.setText(preferences.getString("sharedDob", null));
+                mBioEditTextView.setText(preferences.getString("sharedBio", null));
+
+            }
+        });
         profilePicChangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
