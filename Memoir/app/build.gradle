@@ -28,6 +28,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     // Displaying images
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    //Adding Calendar
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
