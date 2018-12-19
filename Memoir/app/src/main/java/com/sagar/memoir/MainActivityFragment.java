@@ -36,9 +36,11 @@ public class MainActivityFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CardsAdapter adapter;
-    private List<Card> cardList;
+    private List<Card> cardList = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton mFloatingActionButton;
+    private DatabaseHelper db;
+
 
     private OnFragmentInteractionListener mListener;
     public MainActivityFragment() {
@@ -60,6 +62,8 @@ public class MainActivityFragment extends Fragment {
         //initialize reference to views
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mFloatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionAddJournalButton);
+        db = new DatabaseHelper(this.getActivity());
+
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +72,7 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        cardList = new ArrayList<>();
+        cardList.addAll(db.getAllCards());
         adapter = new CardsAdapter(this.getActivity(), cardList);
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -114,7 +118,7 @@ public class MainActivityFragment extends Fragment {
                 R.drawable.album10,
                 R.drawable.album11};
         */
-
+/*
         //getting current date to display
         String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
         //creating an object of card class
@@ -127,7 +131,7 @@ public class MainActivityFragment extends Fragment {
         a = new Card(3,currentDate,"It's my first journal entry.",R.drawable.test_image);
         cardList.add(a);
 
-
+*/
         adapter.notifyDataSetChanged();
     }
 

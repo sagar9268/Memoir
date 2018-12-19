@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //Database Name
-    private static final String DATABASE_NAME = "journals_db";
+    private static final String DATABASE_NAME = "journals.db";
     public DatabaseHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -54,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Card.COLUMN_TIMESTAMP, currentDate);
         //TODO
         //code to insert images here
-
+        values.put(Card.COLUMN_IMAGE,R.drawable.test_image);
         //insert row
         long id = db.insert(Card.TABLE_NAME, null, values);
         //close db connection
@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Card.TABLE_NAME,
-                new String[]{Card.COLUMN_ID, Card.COLUMN_TIMESTAMP, Card.COLUMN_JOURNAL},
+                new String[]{Card.COLUMN_ID, Card.COLUMN_TIMESTAMP, Card.COLUMN_JOURNAL,Card.COLUMN_IMAGE},
                 Card.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         //prepare card object
@@ -89,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Card> cards = new ArrayList<>();
         //select all query
         String selectQuery = "SELECT * FROM "+ Card.TABLE_NAME + " ORDER BY " +
-                Card.COLUMN_TIMESTAMP + "DESC";
+                Card.COLUMN_TIMESTAMP + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -107,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         //close db connection
+        cursor.close();
         db.close();
 
         // return cards list
@@ -135,13 +136,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Card.COLUMN_TIMESTAMP, currentDate);
         //TODO
         //code to insert images here
-
+        values.put(Card.COLUMN_IMAGE,R.drawable.test_image);
         // updating row
         return db.update(Card.TABLE_NAME, values, Card.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(card.getId())});
     }
 
-    public void deleteNote(Card card) {
+    public void deleteCard(Card card) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Card.TABLE_NAME, Card.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(card.getId())});

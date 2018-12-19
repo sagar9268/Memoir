@@ -18,11 +18,11 @@ public class Card {
     //Create table SQL query
     public static final String CREATE_TABLE =
             "CREATE TABLE "+ TABLE_NAME + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_TIMESTAMP + "TEXT,"
-            + COLUMN_JOURNAL + "TEXT,"
-            + COLUMN_IMAGE + "INTEGER"
-            + ")";
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
+            + COLUMN_JOURNAL + " TEXT, "
+            + COLUMN_IMAGE + " INTEGER "
+            + ");";
 
     public Card()
     {
