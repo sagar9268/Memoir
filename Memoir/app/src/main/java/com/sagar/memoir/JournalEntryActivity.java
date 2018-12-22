@@ -29,6 +29,7 @@ public class JournalEntryActivity extends AppCompatActivity {
     private Button mSaveButton;
     private ActionBar mAb;
     private DatabaseHelper db;
+    private String KEY ="date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +60,23 @@ public class JournalEntryActivity extends AppCompatActivity {
             }
         });
 
+        //getting current date to display
+        Bundle dates = getIntent().getExtras();
+        final String currentDate;
+        if(dates == null){
+            currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
+        }
+        else{
+            currentDate = dates.getString(KEY);
+        }
+        mDate.setText(currentDate);
+
         mSaveButton.setEnabled(false);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO - Save the data in database
-                createJournal(mJournal.getText().toString());
+                createJournal(mJournal.getText().toString(),currentDate);
 
                 Toast.makeText(JournalEntryActivity.this,"Journal Entry Added", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(JournalEntryActivity.this, MainActivity.class);
@@ -73,9 +85,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             }
         });
 
-        //getting current date to display
-        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
-        mDate.setText(currentDate);
+
 
     }
 
@@ -110,10 +120,10 @@ public class JournalEntryActivity extends AppCompatActivity {
     };
 
     //Inserting new journal in database
-    private void createJournal(String journal) {
+    private void createJournal(String journal, String date) {
         // inserting journal in db and getting
         // newly inserted journal id
-        long id = db.insertJournal(journal);
+        long id = db.insertJournal(journal, date);
 /*
         // get the newly inserted journal from db
         Card n = db.getCard(id);
