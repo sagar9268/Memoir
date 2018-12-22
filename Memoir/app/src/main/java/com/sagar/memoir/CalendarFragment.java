@@ -1,16 +1,22 @@
 package com.sagar.memoir;
 
 import android.content.Context;
-import android.icu.util.Calendar;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
+import android.widget.TextView;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -32,6 +38,11 @@ public class CalendarFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private TextView monthView;
+    private CompactCalendarView calendar;
+    private List<Card> cardList;
+    private DatabaseHelper db;
+    private String KEY ="date";
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -70,11 +81,43 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        CalendarView calendar = (CalendarView) rootView.findViewById(R.id.calendarView);
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+        monthView = (TextView) rootView.findViewById(R.id.monthView);
+        calendar = (CompactCalendarView) rootView.findViewById(R.id.calendarView);
+        final DateFormat monthFormatter = new SimpleDateFormat("MMMM yyyy");
+        String currDate = monthFormatter.format(new Date());
+        monthView.setText(currDate);
 
+        db = new DatabaseHelper(this.getActivity());
+        cardList = new ArrayList<>();
+        cardList.addAll(db.getAllCards());
+
+        final DateFormat formatter = new SimpleDateFormat("E, MMM d, yyyy");
+        for(Card card:cardList){
+            String stringDate = card.getJournalDate();
+            Date date = null;
+            try {
+                date = (Date)formatter.parse(stringDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long longDate = date.getTime();
+            Event event = new Event(getResources().getColor(R.color.colorPrimary),longDate);
+            calendar.addEvent(event);
+        }
+
+        calendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+            @Override
+            public void onDayClick(Date dateClicked) {
+                Intent i = new Intent(getActivity(), JournalEntryActivity.class);
+                String date = formatter.format(dateClicked);
+                i.putExtra(KEY,date);
+                startActivity(i);
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                String date = monthFormatter.format(firstDayOfNewMonth);
+                monthView.setText(date);
             }
         });
 
