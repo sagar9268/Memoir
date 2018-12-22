@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -108,7 +107,6 @@ public class MainActivityFragment extends Fragment {
 
         //Sorting the cards
         Collections.sort(objectList,CARD_COMPARATOR);
-
         return rootView;
     }
 
