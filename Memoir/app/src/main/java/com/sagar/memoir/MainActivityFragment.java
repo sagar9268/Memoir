@@ -107,7 +107,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         //Sorting the cards
-        Collections.sort(cardList,CARD_COMPARATOR);
+        Collections.sort(objectList,CARD_COMPARATOR);
 
         return rootView;
     }
