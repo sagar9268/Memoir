@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
+        android:text="Month"
         android:textSize="24dp"
         />
 
@@ -20,15 +21,17 @@
         android:id="@+id/calendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:compactCalendarTextSize="16sp"
+        android:layout_below="@+id/monthView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:compactCalendarCurrentDayIndicatorStyle="no_fill_large_indicator"
         app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
-        app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="false"
+        app:compactCalendarCurrentDayIndicatorStyle="no_fill_large_indicator"
         app:compactCalendarEventIndicatorStyle="fill_large_indicator"
-        android:layout_below="@+id/monthView"/>
+        app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="false"
+        app:compactCalendarTextSize="16sp" />
 
 </RelativeLayout>
