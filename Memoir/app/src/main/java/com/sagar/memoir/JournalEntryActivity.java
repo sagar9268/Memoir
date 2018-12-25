@@ -28,7 +28,6 @@ public class JournalEntryActivity extends AppCompatActivity {
     private Button mImageButton;
     private ImageView mImageView;
     private ActionBar mAb;
-    private Uri selectedImage;
     private DatabaseHelper db;
     private String KEY ="date";
 
@@ -105,7 +104,7 @@ public class JournalEntryActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if(requestCode == 1 && resultCode == RESULT_OK && data != null)
         {
-            selectedImage = data.getData();
+            Uri selectedImage = data.getData();
             mImageView.setImageURI(selectedImage);
         }
     }

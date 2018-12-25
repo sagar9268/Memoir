@@ -1,6 +1,8 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +85,11 @@ public class CardsAdapter extends RecyclerView.Adapter {
                 ((MyViewHolder)holder).jDate.setText(card.getJournalDate());
                 ((MyViewHolder)holder).jText.setText(card.getJournalText());
                 //loading journal image
-                ((MyViewHolder)holder).jImage.setImageDrawable(card.getImage());
+                byte[] byteArray = card.getPictureData();
+                if(byteArray != null){
+                    Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    ((MyViewHolder)holder).jImage.setImageBitmap(bmp);
+                }
                 break;
             case MONTH:
                 MonthCard monthCard = (MonthCard)cardList.get(position);
