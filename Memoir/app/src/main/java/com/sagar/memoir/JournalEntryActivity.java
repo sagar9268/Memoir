@@ -30,6 +30,7 @@ public class JournalEntryActivity extends AppCompatActivity {
     private ActionBar mAb;
     private DatabaseHelper db;
     private String KEY ="date";
+    private int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class JournalEntryActivity extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.addImage);
         mAb = getSupportActionBar();
         mAb.setTitle("Memoir");
+        flag = 1;
 
         db = new DatabaseHelper(this);
 
@@ -91,9 +93,19 @@ public class JournalEntryActivity extends AppCompatActivity {
         mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , 1);
+                if(flag == 1){
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+                    mImageButton.setText("Remove Image");
+                    flag = 0;
+                }
+                else {
+                    mImageView.setImageURI(null);
+                    mImageButton.setText("Add Image");
+                    flag = 1;
+                }
+
             }
         });
     }
