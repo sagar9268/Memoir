@@ -1,15 +1,12 @@
 package com.sagar.memoir;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -85,11 +82,11 @@ public class CardsAdapter extends RecyclerView.Adapter {
                 Card card = (Card)cardList.get(position);
                 ((MyViewHolder)holder).jDate.setText(card.getJournalDate());
                 ((MyViewHolder)holder).jText.setText(card.getJournalText());
-                //loading journal image with glide library
-                Glide.with(mContext).load(card.getImage()).into(((MyViewHolder)holder).jImage);
+                //loading journal image
+                ((MyViewHolder)holder).jImage.setImageDrawable(card.getImage());
                 break;
             case MONTH:
-                MonthCard monthCard =(MonthCard)cardList.get(position);
+                MonthCard monthCard = (MonthCard)cardList.get(position);
                 ((MyViewHolder2)holder).jMonth.setText(monthCard.getMonth());
                 break;
              default:

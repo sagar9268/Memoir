@@ -1,6 +1,6 @@
 package com.sagar.memoir;
 
-import java.text.DateFormat;
+import android.graphics.drawable.Drawable;
 
 public class Card {
     public static final String TABLE_NAME = "cards";
@@ -13,7 +13,7 @@ public class Card {
     private int id;
     private String journalDate;
     private String journalText;
-    private int image;
+    private Drawable drawable;
 
     //Create table SQL query
     public static final String CREATE_TABLE =
@@ -21,19 +21,19 @@ public class Card {
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP, "
             + COLUMN_JOURNAL + " TEXT, "
-            + COLUMN_IMAGE + " INTEGER "
+            + COLUMN_IMAGE + " TEXT "
             + ");";
 
     public Card()
     {
     }
 
-    public Card (int id, String journalDate, String journalText, int image)
+    public Card (int id, String journalDate, String journalText, Drawable drawable)
     {
         this.id = id;
         this.journalDate = journalDate;
         this.journalText = journalText;
-        this.image = image;
+        this.drawable = drawable;
     }
 
     public void setId(int id) {
@@ -60,11 +60,13 @@ public class Card {
         return journalText;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setPictureData(byte[] pictureData) {
+        drawable = ImageUtils.byteToDrawable(pictureData);
     }
 
-    public int getImage() {
-        return image;
+    public byte[] getPictureData(){
+        return ImageUtils.drawableToByteArray(drawable);
     }
+
+    public Drawable getImage(){ return drawable; }
 }

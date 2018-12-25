@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.Drawable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertJournal(String journal, String date)
+    public long insertJournal(String journal, String date, Drawable drawable)
     {
         //get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
@@ -52,8 +53,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Card.COLUMN_JOURNAL, journal);
         values.put(Card.COLUMN_TIMESTAMP, date);
         //TODO
+        byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
-        values.put(Card.COLUMN_IMAGE,R.drawable.test_image);
+        values.put(Card.COLUMN_IMAGE,data);
         //insert row
         long id = db.insert(Card.TABLE_NAME, null, values);
         //close db connection
@@ -71,12 +73,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{Card.COLUMN_ID, Card.COLUMN_TIMESTAMP, Card.COLUMN_JOURNAL,Card.COLUMN_IMAGE},
                 Card.COLUMN_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
+
+        byte[] pictureData = cursor.getBlob(cursor.getColumnIndex(Card.COLUMN_IMAGE));
+        Drawable drawable = ImageUtils.byteToDrawable(pictureData);
         //prepare card object
         Card card = new Card(
                 cursor.getInt(cursor.getColumnIndex(Card.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndex(Card.COLUMN_TIMESTAMP)),
                 cursor.getString(cursor.getColumnIndex(Card.COLUMN_JOURNAL)),
-                cursor.getInt(cursor.getColumnIndex(Card.COLUMN_IMAGE)));
+                drawable);
         //close the db connection
         cursor.close();
         db.close();
@@ -99,10 +104,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             do {
                 Card card = new Card();
+                byte[] pictureData = cursor.getBlob(cursor.getColumnIndex(Card.COLUMN_IMAGE));
                 card.setId(cursor.getInt(cursor.getColumnIndex(Card.COLUMN_ID)));
                 card.setJournalDate(cursor.getString(cursor.getColumnIndex(Card.COLUMN_TIMESTAMP)));
                 card.setJournalText(cursor.getString(cursor.getColumnIndex(Card.COLUMN_JOURNAL)));
-                card.setImage(cursor.getInt(cursor.getColumnIndex(Card.COLUMN_IMAGE)));
+                card.setPictureData(pictureData);
                 cards.add(card);
             }while (cursor.moveToNext());
         }
