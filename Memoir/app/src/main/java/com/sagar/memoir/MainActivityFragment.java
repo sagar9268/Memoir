@@ -78,6 +78,7 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), JournalEntryActivity.class);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

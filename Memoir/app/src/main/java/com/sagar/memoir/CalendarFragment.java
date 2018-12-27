@@ -112,6 +112,7 @@ public class CalendarFragment extends Fragment {
                 String date = formatter.format(dateClicked);
                 i.putExtra(KEY,date);
                 startActivity(i);
+                getActivity().finish();
             }
 
             @Override
