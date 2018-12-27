@@ -54,41 +54,59 @@
 
             <Button
                 android:id="@+id/buttonCancel"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/EditTextJournalEntry"
-                android:paddingStart="10dp"
+                android:layout_below="@id/buttonAddImage"
+                android:layout_toStartOf="@id/buttonSave"
+                android:backgroundTint="@android:color/transparent"
+                android:focusable="true"
+                android:paddingStart="16dp"
                 android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:text="Cancel" />
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp"
+                android:text="Cancel"
+                android:textSize="14sp"
+                android:typeface="sans" />
 
             <Button
                 android:id="@+id/buttonAddImage"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/EditTextJournalEntry"
-                android:layout_toEndOf="@id/buttonCancel"
-                android:paddingStart="10dp"
+                android:backgroundTint="@android:color/transparent"
+                android:focusable="true"
+                android:paddingStart="16dp"
                 android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:text="Add Image" />
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp"
+                android:text="Add Image"
+                android:textSize="14sp"
+                android:typeface="sans" />
 
             <Button
                 android:id="@+id/buttonSave"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/EditTextJournalEntry"
-                android:layout_toEndOf="@id/buttonAddImage"
-                android:paddingStart="10dp"
+                android:layout_below="@id/buttonAddImage"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/card_title_padding"
+                android:backgroundTint="@color/colorPrimary"
+                android:focusable="true"
+                android:paddingStart="16dp"
                 android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:text="Save" />
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp"
+                android:text="Save"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/addImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/buttonAddImage"
+                android:layout_below="@id/buttonSave"
                 android:contentDescription="@string/journal_image"
                 android:foregroundGravity="center"
                 android:adjustViewBounds="true"
