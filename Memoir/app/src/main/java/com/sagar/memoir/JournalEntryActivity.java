@@ -94,8 +94,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(flag == 1){
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickPhoto , 1);
                     mImageButton.setText("Remove Image");
                     flag = 0;
