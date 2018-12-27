@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
     <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="3dp"
+        android:layout_gravity="center"
         android:layout_margin="5dp"
+        android:elevation="3dp"
+        card_view:cardBackgroundColor="@color/colorSecondaryDark"
         card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
@@ -26,8 +26,9 @@
                 android:paddingStart="@dimen/card_title_padding"
                 android:paddingTop="@dimen/card_title_padding"
                 android:paddingEnd="@dimen/card_title_padding"
+                android:paddingBottom="@dimen/card_title_padding"
                 android:text="01/01/2000"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimaryLight"
                 android:textSize="@dimen/card_title" />
 
             <TextView
@@ -37,11 +38,11 @@
                 android:layout_below="@id/journal_date"
                 android:paddingStart="@dimen/card_title_padding"
                 android:paddingEnd="@dimen/card_title_padding"
-                android:paddingBottom="@dimen/card_text_bottom_padding"
+                android:paddingBottom="@dimen/card_title_padding"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
             <ImageView

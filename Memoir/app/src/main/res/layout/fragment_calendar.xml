@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_calendar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/navigation_calendar"
+    android:background="@color/colorPrimaryLight"
     tools:context=".CalendarFragment">
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Month"
+        android:textColor="@color/colorSecondaryDark"
         android:textSize="24dp" />
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView

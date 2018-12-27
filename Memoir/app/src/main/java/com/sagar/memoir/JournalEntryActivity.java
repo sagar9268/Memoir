@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -140,12 +141,12 @@ public class JournalEntryActivity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
             if(s.toString().length()<3) {
                 mSaveButton.setEnabled(false);
-                mSaveButton.setBackgroundColor(getResources().getColor(R.color.grey));
-                mSaveButton.setTextColor(getResources().getColor(R.color.black));
+               // mSaveButton.setBackgroundColor(getResources().getColor(R.color.grey));
+               // mSaveButton.setTextColor(getResources().getColor(R.color.black));
             } else {
                 mSaveButton.setEnabled(true);
-                mSaveButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                mSaveButton.setTextColor(getResources().getColor(R.color.white));
+               // mSaveButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+               // mSaveButton.setTextColor(getResources().getColor(R.color.white));
             }
         }
 

@@ -101,7 +101,7 @@ public class CalendarFragment extends Fragment {
                 e.printStackTrace();
             }
             long longDate = date.getTime();
-            Event event = new Event(getResources().getColor(R.color.colorPrimary),longDate);
+            Event event = new Event(getResources().getColor(R.color.colorSecondaryLight),longDate);
             calendar.addEvent(event);
         }
 
