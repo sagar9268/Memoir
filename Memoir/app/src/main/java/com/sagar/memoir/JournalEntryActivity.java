@@ -80,7 +80,7 @@ public class JournalEntryActivity extends AppCompatActivity {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - Save the data in database
+                //Save the data in database
                 Drawable drawable = mImageView.getDrawable();
                 createJournal(mJournal.getText().toString(),currentDate,drawable);
 

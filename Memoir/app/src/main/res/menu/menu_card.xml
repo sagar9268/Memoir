@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_share"
-        android:orderInCategory="100"
-        android:title="@string/share" />
-
-    <item
         android:id="@+id/action_edit"
-        android:orderInCategory="101"
+        android:orderInCategory="100"
         android:title="@string/edit"/>
 
     <item
         android:id="@+id/action_delete"
-        android:orderInCategory="102"
+        android:orderInCategory="101"
         android:title="@string/delete" />
+
+    <item
+        android:id="@+id/action_share"
+        android:orderInCategory="102"
+        android:title="@string/share" />
 
 </menu>

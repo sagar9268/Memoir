@@ -52,7 +52,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //id will be inserted automatically, no need to add them
         values.put(Card.COLUMN_JOURNAL, journal);
         values.put(Card.COLUMN_TIMESTAMP, date);
-        //TODO
         byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
         if(data != null)
@@ -134,23 +133,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public int updateCard(Card card) {
+    public int updateJournal(Card card, String date, Drawable drawable) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(Card.COLUMN_JOURNAL, card.getJournalText());
-        //getting current date to display in journal entry
-        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
-        values.put(Card.COLUMN_TIMESTAMP, currentDate);
-        //TODO
+        values.put(Card.COLUMN_TIMESTAMP, date);
+        byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
-        values.put(Card.COLUMN_IMAGE,R.drawable.test_image);
+        if(data != null)
+        values.put(Card.COLUMN_IMAGE, data);
         // updating row
         return db.update(Card.TABLE_NAME, values, Card.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(card.getId())});
     }
 
-    public void deleteCard(Card card) {
+    public void deleteJournal(Card card) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Card.TABLE_NAME, Card.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(card.getId())});
