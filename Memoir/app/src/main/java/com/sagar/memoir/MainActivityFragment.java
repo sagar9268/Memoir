@@ -132,43 +132,6 @@ public class MainActivityFragment extends Fragment {
      * Adding few cards for testing
      */
     private void prepareCards() throws ParseException {
-        /*
-        int[] covers = new int[]{
-                R.drawable.album1,
-                R.drawable.album2,
-                R.drawable.album3,
-                R.drawable.album4,
-                R.drawable.album5,
-                R.drawable.album6,
-                R.drawable.album7,
-                R.drawable.album8,
-                R.drawable.album9,
-                R.drawable.album10,
-                R.drawable.album11};
-        */
-/*
-        //getting current date to display
-        String currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
-
-
-        DateFormat formatter = new SimpleDateFormat("E, MMM d, yyyy",Locale.getDefault());
-        String entryDate;
-
-        //creating an object of card class
-        Card a = new Card(1,currentDate,"Hello World !",R.drawable.test_image);
-        cardList.add(a);
-
-        a = new Card(2,currentDate,"Hi there",R.drawable.test_image);
-        cardList.add(a);
-
-        a = new Card(3,currentDate,"It's my first journal entry.",R.drawable.test_image);
-        cardList.add(a);
-
-
-        entryDate = "Mon, Dec 17, 2018";
-        a = new Card(entryDate,"It's my first journal entry.",R.drawable.test_image);
-        addCard(a);
-*/
         adapter.notifyDataSetChanged();
     }
 
@@ -192,33 +155,33 @@ public class MainActivityFragment extends Fragment {
             objectList.add(new MonthCard(lastDate, month));
         }
         objectList.add(card);
-
-
     }
 
     //Comparator for Sorting
     static final Comparator<Object> CARD_COMPARATOR = new Comparator<Object>() {
-                public int compare(Object card1, Object card2) {
-                    String stringDate1;
-                    String stringDate2;
-                    if(card1 instanceof Card)
-                        stringDate1 = ((Card) card1).getJournalDate();
-                    else
-                        stringDate1 = ((MonthCard) card1).getJournalDate();
-                    if(card2 instanceof Card)
-                        stringDate2 = ((Card) card2).getJournalDate();
-                    else
-                        stringDate2 = ((MonthCard) card2).getJournalDate();
-                    DateFormat format = new SimpleDateFormat("E, MMM d, yyyy");
-                    try {
-                        Date date1 = (Date)format.parse(stringDate1);
-                        Date date2 = (Date)format.parse(stringDate2);
-                        return date2.compareTo(date1);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    return 0;
-                }
+        public int compare(Object card1, Object card2) {
+            String stringDate1;
+            String stringDate2;
+            if(card1 instanceof Card)
+                stringDate1 = ((Card) card1).getJournalDate();
+            else
+                stringDate1 = ((MonthCard) card1).getJournalDate();
+            if(card2 instanceof Card)
+                stringDate2 = ((Card) card2).getJournalDate();
+            else
+                stringDate2 = ((MonthCard) card2).getJournalDate();
+            DateFormat format = new SimpleDateFormat("E, MMM d, yyyy");
+            try
+            {
+                Date date1 = (Date)format.parse(stringDate1);
+                Date date2 = (Date)format.parse(stringDate2);
+                return date2.compareTo(date1);
+            } catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+            return 0;
+        }
     };
 
     public interface OnFragmentInteractionListener {
