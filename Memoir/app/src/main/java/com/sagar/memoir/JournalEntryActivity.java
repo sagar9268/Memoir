@@ -1,11 +1,12 @@
 package com.sagar.memoir;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.design.button.MaterialButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +19,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.lang.Boolean.FALSE;
 
 public class JournalEntryActivity extends AppCompatActivity {
 
@@ -34,8 +38,16 @@ public class JournalEntryActivity extends AppCompatActivity {
     private ImageView mImageView;
     private ActionBar mAb;
     private DatabaseHelper db;
-    private String KEY ="date";
+
+    private String ID_KEY = "id";
+    private String DATE_KEY = "date";
+    private String NEW_ENTRY = "new_entry";
     private int flag;
+
+    private String text;
+    private Bitmap bmp;
+    private long id;
+    private Card card;
 
     private final int REQ_CODE_IMAGE_INPUT = 1;
     private final int REQ_CODE_SPEECH_INPUT = 2;
@@ -63,6 +75,7 @@ public class JournalEntryActivity extends AppCompatActivity {
 
         //Enable save button when there's text change and check the length of text
         mJournal.addTextChangedListener(watcher);
+        mSaveButton.setEnabled(false);
 
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,25 +87,43 @@ public class JournalEntryActivity extends AppCompatActivity {
         });
 
         //getting current date to display
-        Bundle dates = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         final String currentDate;
-        if(dates == null){
+        if(bundle == null){
             currentDate = new SimpleDateFormat("E, MMM d, yyyy", Locale.getDefault()).format(new Date());
         }
         else{
-            currentDate = dates.getString(KEY);
+            currentDate = bundle.getString(DATE_KEY);
+            if(bundle.getBoolean(NEW_ENTRY) == FALSE){
+                id = bundle.getInt(ID_KEY);
+                card = db.getCard(id);
+                text = card.getJournalText();
+                mJournal.setText(text);
+                mSaveButton.setEnabled(true);
+                byte[] byteArray = card.getPictureData();
+                if(byteArray != null){
+                    mImageButton.setText("Remove Image");
+                    flag = 0;
+                    bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    mImageView.setImageBitmap(bmp);
+                }
+            }
         }
         mDate.setText(currentDate);
 
-        mSaveButton.setEnabled(false);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Save the data in database
                 Drawable drawable = mImageView.getDrawable();
-                createJournal(mJournal.getText().toString(),currentDate,drawable);
-
-                Toast.makeText(JournalEntryActivity.this,"Journal Entry Added", Toast.LENGTH_SHORT).show();
+                if(bundle != null && bundle.getBoolean(NEW_ENTRY) == FALSE){
+                    editJournal(id, mJournal.getText().toString(), currentDate, drawable);
+                    Toast.makeText(JournalEntryActivity.this,"Journal Entry Updated", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    createJournal(mJournal.getText().toString(),currentDate,drawable);
+                    Toast.makeText(JournalEntryActivity.this,"Journal Entry Added", Toast.LENGTH_SHORT).show();
+                }
                 Intent i = new Intent(JournalEntryActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
@@ -109,7 +140,7 @@ public class JournalEntryActivity extends AppCompatActivity {
                     flag = 0;
                 }
                 else {
-                    mImageView.setImageURI(null);
+                    mImageView.setImageBitmap(null);
                     mImageButton.setText("Add Image");
                     flag = 1;
                 }
@@ -206,5 +237,9 @@ public class JournalEntryActivity extends AppCompatActivity {
 
         }
         */
+    }
+
+    private void editJournal(long id, String journal, String currentDate, Drawable drawable) {
+        db.updateJournal(id, journal, currentDate, drawable);
     }
 }

@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Boolean.TRUE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +44,8 @@ public class CalendarFragment extends Fragment {
     private CompactCalendarView calendar;
     private List<Card> cardList;
     private DatabaseHelper db;
-    private String KEY ="date";
+    private String DATE_KEY = "date";
+    private String NEW_ENTRY = "new_entry";
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -110,7 +113,8 @@ public class CalendarFragment extends Fragment {
             public void onDayClick(Date dateClicked) {
                 Intent i = new Intent(getActivity(), JournalEntryActivity.class);
                 String date = formatter.format(dateClicked);
-                i.putExtra(KEY,date);
+                i.putExtra(NEW_ENTRY,TRUE);
+                i.putExtra(DATE_KEY,date);
                 startActivity(i);
                 getActivity().finish();
             }

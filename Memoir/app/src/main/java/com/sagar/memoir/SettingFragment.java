@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
 import static android.app.Activity.RESULT_OK;
 
 

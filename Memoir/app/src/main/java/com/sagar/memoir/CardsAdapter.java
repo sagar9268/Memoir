@@ -1,9 +1,11 @@
 package com.sagar.memoir;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +18,17 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
+
 public class CardsAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<Object> cardList;
     private final int ENTRY = 1, MONTH = 0;
     private DatabaseHelper db;
+    private String ID_KEY = "id";
+    private String DATE_KEY = "date";
+    private String NEW_ENTRY = "new_entry";
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView jDate;
@@ -127,13 +134,22 @@ public class CardsAdapter extends RecyclerView.Adapter {
                 {
                     case R.id.action_edit:
                         //code to edit journal
-
+                        db = new DatabaseHelper(mContext);
+                        Card card = (Card)cardList.get(mPosition);
+                        int id = card.getId();
+                        String date = card.getJournalDate();
+                        Intent intent = new Intent(mContext,JournalEntryActivity.class);
+                        intent.putExtra(ID_KEY,id);
+                        intent.putExtra(DATE_KEY,date);
+                        intent.putExtra(NEW_ENTRY,FALSE);
+                        Log.d("id",""+id);
+                        mContext.startActivity(intent);
                         return true;
                     case R.id.action_delete:
                         //code to delete journal
                         db = new DatabaseHelper(mContext);
-                        Card card = (Card)cardList.get(mPosition);
-                        db.deleteJournal(card);
+                        Card card1 = (Card)cardList.get(mPosition);
+                        db.deleteJournal(card1);
                         cardList.remove(mPosition);
                         notifyItemRemoved(mPosition);
                         Toast.makeText(mContext,"Journal deleted!", Toast.LENGTH_SHORT).show();
