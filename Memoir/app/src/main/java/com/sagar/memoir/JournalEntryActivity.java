@@ -86,7 +86,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             }
         });
 
-        //getting current date to display
+        //getting current data to display
         final Bundle bundle = getIntent().getExtras();
         final String currentDate;
         if(bundle == null){
@@ -117,10 +117,12 @@ public class JournalEntryActivity extends AppCompatActivity {
                 //Save the data in database
                 Drawable drawable = mImageView.getDrawable();
                 if(bundle != null && bundle.getBoolean(NEW_ENTRY) == FALSE){
+                    //Updating previous Entry
                     editJournal(id, mJournal.getText().toString(), currentDate, drawable);
                     Toast.makeText(JournalEntryActivity.this,"Journal Entry Updated", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    //Creating new Entry
                     createJournal(mJournal.getText().toString(),currentDate,drawable);
                     Toast.makeText(JournalEntryActivity.this,"Journal Entry Added", Toast.LENGTH_SHORT).show();
                 }
