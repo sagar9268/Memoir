@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +45,7 @@ public class MainActivityFragment extends Fragment {
     private FloatingActionButton mFloatingActionButton;
     private DatabaseHelper db;
 
-    HashMap<String,Date> map;
+    public HashMap<String,Integer> map;
 
     private OnFragmentInteractionListener mListener;
     public MainActivityFragment() {
@@ -150,8 +150,13 @@ public class MainActivityFragment extends Fragment {
         String lastDate = formatter.format(date);
 
         //Checking if entry has been made this month
-        if(!map.containsKey(monthWithYear)) {
-            map.put(monthWithYear, date);
+        if(map.containsKey(monthWithYear)) {
+            Integer count = map.get(monthWithYear);
+            map.remove(monthWithYear);
+            map.put(monthWithYear,count+1);
+        }
+        else{
+            map.put(monthWithYear, 1);
             objectList.add(new MonthCard(lastDate, month));
         }
         objectList.add(card);
