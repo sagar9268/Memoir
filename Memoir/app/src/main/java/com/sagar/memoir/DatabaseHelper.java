@@ -136,7 +136,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
         if(data != null)
-        values.put(Card.COLUMN_IMAGE, data);
+            values.put(Card.COLUMN_IMAGE, data);
+        else
+            values.putNull(Card.COLUMN_IMAGE);
         // updating row
         return db.update(Card.TABLE_NAME, values, Card.COLUMN_ID + " = ?",
                 new String[]{Long.toString(id)});

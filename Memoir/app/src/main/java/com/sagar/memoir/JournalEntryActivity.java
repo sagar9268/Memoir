@@ -143,6 +143,7 @@ public class JournalEntryActivity extends AppCompatActivity {
                 }
                 else {
                     mImageView.setImageBitmap(null);
+                    mImageView.setImageDrawable(null);
                     mImageButton.setText("Add Image");
                     flag = 1;
                 }
