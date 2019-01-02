@@ -24,4 +24,5 @@
     <string name="setting">Setting</string>
     <string name="change_pic_button">Change Pic</string>
     <string name="title_activity_journal_entry">JournalEntryActivity</string>
+    <string name="enter_journal_message">Enter your journal here</string>
 </resources>

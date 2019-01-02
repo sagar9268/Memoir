@@ -7,11 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.drawable.Drawable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -68,12 +65,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         // get readable database as we are not inserting anything
         SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(Card.TABLE_NAME,
-                new String[]{Card.COLUMN_ID, Card.COLUMN_TIMESTAMP, Card.COLUMN_JOURNAL,Card.COLUMN_IMAGE},
-                Card.COLUMN_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-
+        String selectQuery = "SELECT * FROM "+ Card.TABLE_NAME + " WHERE " +
+                Card.COLUMN_ID + " = " + id;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
         byte[] pictureData = cursor.getBlob(cursor.getColumnIndex(Card.COLUMN_IMAGE));
         Drawable drawable = ImageUtils.byteToDrawable(pictureData);
         //prepare card object
@@ -133,19 +128,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public int updateJournal(Card card, String date, Drawable drawable) {
+    public int updateJournal(long id, String journal, String date, Drawable drawable) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(Card.COLUMN_JOURNAL, card.getJournalText());
+        values.put(Card.COLUMN_JOURNAL, journal);
         values.put(Card.COLUMN_TIMESTAMP, date);
         byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
         if(data != null)
-        values.put(Card.COLUMN_IMAGE, data);
+            values.put(Card.COLUMN_IMAGE, data);
+        else
+            values.putNull(Card.COLUMN_IMAGE);
         // updating row
         return db.update(Card.TABLE_NAME, values, Card.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(card.getId())});
+                new String[]{Long.toString(id)});
     }
 
     public void deleteJournal(Card card) {
