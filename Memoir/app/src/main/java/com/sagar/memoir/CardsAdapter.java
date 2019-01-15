@@ -1,5 +1,6 @@
 package com.sagar.memoir;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -144,6 +145,7 @@ public class CardsAdapter extends RecyclerView.Adapter {
                         intent.putExtra(NEW_ENTRY,FALSE);
                         Log.d("id",""+id);
                         mContext.startActivity(intent);
+                        ((Activity)mContext).finish();
                         return true;
                     case R.id.action_delete:
                         //code to delete journal

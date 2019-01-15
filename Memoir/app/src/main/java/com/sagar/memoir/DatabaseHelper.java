@@ -52,7 +52,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         byte[] data = ImageUtils.drawableToByteArray(drawable);
         //code to insert images here
         if(data != null)
-        values.put(Card.COLUMN_IMAGE,data);
+            values.put(Card.COLUMN_IMAGE,data);
+        else
+            values.putNull(Card.COLUMN_IMAGE);
         //insert row
         long id = db.insert(Card.TABLE_NAME, null, values);
         //close db connection
@@ -104,7 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 card.setJournalDate(cursor.getString(cursor.getColumnIndex(Card.COLUMN_TIMESTAMP)));
                 card.setJournalText(cursor.getString(cursor.getColumnIndex(Card.COLUMN_JOURNAL)));
                 if(pictureData != null)
-                card.setPictureData(pictureData);
+                    card.setPictureData(pictureData);
                 cards.add(card);
             }while (cursor.moveToNext());
         }
