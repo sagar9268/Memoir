@@ -13,7 +13,7 @@ class ImageUtils {
         if (d != null) {
             Bitmap imageBitmap = ((BitmapDrawable) d).getBitmap();
             ByteArrayOutputStream bAos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bAos);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, bAos);
             byte[] byteData = bAos.toByteArray();
 
             return byteData;
