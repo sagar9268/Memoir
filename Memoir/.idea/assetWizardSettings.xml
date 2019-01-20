@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -18,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/prajwal/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_mic_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Programming/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,10 +33,11 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="2196f3" />
-                            <entry key="outputName" value="ic_mic" />
+                            <entry key="height" value="256" />
+                            <entry key="outputName" value="ic_account_circle_black_256dp" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$USER_HOME$/C:\Users\Sagar" />
+                            <entry key="sourceFile" value="C:\Users\Sagar\C:\Users\Sagar" />
+                            <entry key="width" value="256" />
                           </map>
                         </option>
                       </PersistentState>
