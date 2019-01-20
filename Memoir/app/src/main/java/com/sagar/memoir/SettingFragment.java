@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -131,18 +133,31 @@ public class SettingFragment extends Fragment {
 
         //setting text to text views
         SharedPreferences preferences = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        mNameTitle.setText(preferences.getString("sharedName", null));
-        mNameEditTextView.setText(preferences.getString("sharedName", null));
-        mGenderEditTextView.setText(preferences.getString("sharedGender", null));
-        mDOBEditTextView.setText(preferences.getString("sharedDob", null));
-        mBioEditTextView.setText(preferences.getString("sharedBio", null));
+        if(preferences.getString("sharedName", null) != null)
+            mNameTitle.setText(preferences.getString("sharedName", null));
+        if(preferences.getString("sharedName", null) != null)
+            mNameEditTextView.setText(preferences.getString("sharedName", null));
+        if(preferences.getString("sharedGender", null) != null)
+            mGenderEditTextView.setText(preferences.getString("sharedGender", null));
+        if(preferences.getString("sharedDob", null) != null)
+            mDOBEditTextView.setText(preferences.getString("sharedDob", null));
+        if(preferences.getString("sharedBio", null) != null)
+            mBioEditTextView.setText(preferences.getString("sharedBio", null));
 
-        profilePicChangeButton.setVisibility(View.INVISIBLE);
 
         //setting profile pic
         if(preferences.getString("sharedProfilePic",null) != null)
         {
+            profilePicChangeButton.setVisibility(View.INVISIBLE);
+            Uri setPic = Uri.parse(preferences.getString("sharedProfilePic",null));
+            //Glide.with(this).load(Uri.parse(preferences.getString("sharedProfilePic",null))).into(profilePic);
             profilePic.setImageURI(Uri.parse(preferences.getString("sharedProfilePic",null)));
+        }
+        else
+        {
+            //Glide.with(this).load(R.drawable.ic_account_circle_black_256dp).asBitmap().into(profilePic);
+            profilePicChangeButton.setVisibility(View.VISIBLE);
+            profilePic.setImageDrawable(getResources().getDrawable(R.drawable.ic_account_circle_black_256dp));
         }
 
         //Setting up Gender spinner
@@ -367,6 +382,7 @@ public class SettingFragment extends Fragment {
             edit.putString("sharedProfilePic", picturePath);
             edit.apply();
 
+            //Glide.with(this).load(Uri.parse(picturePath)).into(profilePic);
             profilePic.setImageURI(Uri.parse(picturePath));
         }
     }

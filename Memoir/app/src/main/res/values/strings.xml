@@ -25,4 +25,6 @@
     <string name="change_pic_button">Change Pic</string>
     <string name="title_activity_journal_entry">JournalEntryActivity</string>
     <string name="enter_journal_message">Enter your journal here</string>
+    <string name="male_female_other">Male/Female/Other</string>
+    <string name="date_format">DD/MM/YYYY</string>
 </resources>

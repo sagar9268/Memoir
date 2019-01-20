@@ -20,6 +20,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.bumptech.glide.load.resource.transcode.GlideBitmapDrawableTranscoder;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class JournalEntryActivity extends AppCompatActivity {
     private int flag;
 
     private String text;
-    private Bitmap bmp;
+    //private Bitmap bmp;
     private long id;
     private Card card;
 
@@ -105,8 +108,9 @@ public class JournalEntryActivity extends AppCompatActivity {
                 if(byteArray != null){
                     mImageButton.setText("Remove Image");
                     flag = 0;
-                    bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                    mImageView.setImageBitmap(bmp);
+                    //bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    //mImageView.setImageBitmap(bmp);
+                    Glide.with(this).load(byteArray).into(mImageView);
                 }
             }
         }
@@ -116,7 +120,7 @@ public class JournalEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Save the data in database
-                Drawable drawable = mImageView.getDrawable();
+                Drawable drawable = mImageView.getDrawable();//.getCurrent();
                 if(bundle != null && bundle.getBoolean(NEW_ENTRY) == FALSE){
                     //Updating previous Entry
                     editJournal(id, mJournal.getText().toString(), currentDate, drawable);
@@ -180,7 +184,8 @@ public class JournalEntryActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK && data != null)
                 {
                     Uri selectedImage = data.getData();
-                    mImageView.setImageURI(selectedImage);
+                    //mImageView.setImageURI(selectedImage);
+                    Glide.with(this).load(selectedImage).asBitmap().into(mImageView);
                 }
                 break;
             case REQ_CODE_SPEECH_INPUT:
