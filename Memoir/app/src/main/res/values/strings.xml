@@ -18,6 +18,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="others">Others</string>
+    <string name="journal_entry_activity_title">Add Journal</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

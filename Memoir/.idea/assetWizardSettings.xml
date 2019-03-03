@@ -94,7 +94,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Programming/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Programming/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_create_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -104,11 +104,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="height" value="256" />
-                            <entry key="outputName" value="ic_account_circle_black_256dp" />
+                            <entry key="color" value="1976d2" />
+                            <entry key="outputName" value="ic_write_black_24dp" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\Sagar\C:\Users\Sagar" />
-                            <entry key="width" value="256" />
                           </map>
                         </option>
                       </PersistentState>

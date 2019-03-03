@@ -72,6 +72,9 @@ public class SettingFragment extends Fragment {
 
     private String mGender;
 
+    private String nameCheck;
+    private String bioCheck;
+
     public static final String USER_PREFS = "mPrefsFile";
 
     private OnFragmentInteractionListener mListener;
@@ -133,7 +136,7 @@ public class SettingFragment extends Fragment {
 
         //setting text to text views
         SharedPreferences preferences = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        if(preferences.getString("sharedName", null) != null)
+        if((nameCheck = preferences.getString("sharedName", null)) != null)
             mNameTitle.setText(preferences.getString("sharedName", null));
         if(preferences.getString("sharedName", null) != null)
             mNameEditTextView.setText(preferences.getString("sharedName", null));
@@ -141,7 +144,7 @@ public class SettingFragment extends Fragment {
             mGenderEditTextView.setText(preferences.getString("sharedGender", null));
         if(preferences.getString("sharedDob", null) != null)
             mDOBEditTextView.setText(preferences.getString("sharedDob", null));
-        if(preferences.getString("sharedBio", null) != null)
+        if((bioCheck = preferences.getString("sharedBio", null)) != null)
             mBioEditTextView.setText(preferences.getString("sharedBio", null));
 
 
@@ -193,8 +196,10 @@ public class SettingFragment extends Fragment {
                 mDOBEdit.setVisibility(View.VISIBLE);
 
                 //Set text to edit
-                mNameEdit.setText(mNameEditTextView.getText().toString());
-                mBioEdit.setText(mBioEditTextView.getText().toString());
+                if(nameCheck != null)
+                    mNameEdit.setText(mNameEditTextView.getText().toString());
+                if(bioCheck != null)
+                    mBioEdit.setText(mBioEditTextView.getText().toString());
                 editGender.setSelection(((ArrayAdapter)editGender.getAdapter()).getPosition(mGenderEditTextView.getText().toString()));
                 mDOBEdit.setText(mDOBEditTextView.getText().toString());
 

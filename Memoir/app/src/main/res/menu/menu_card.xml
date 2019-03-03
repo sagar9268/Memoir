@@ -13,9 +13,6 @@
         android:orderInCategory="101"
         android:title="@string/delete" />
 
-    <item
-        android:id="@+id/action_share"
-        android:orderInCategory="102"
-        android:title="@string/share" />
+
 
 </menu>
