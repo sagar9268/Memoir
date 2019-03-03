@@ -72,10 +72,11 @@ public class JournalEntryActivity extends AppCompatActivity {
         mSpeechButton = (ImageButton) findViewById(R.id.buttonSpeech);
         mImageView = (ImageView) findViewById(R.id.addImage);
         mAb = getSupportActionBar();
-        mAb.setTitle("Memoir");
+        mAb.setTitle(R.string.journal_entry_activity_title);
         flag = 1;
 
         db = new DatabaseHelper(this);
+
 
         //Enable save button when there's text change and check the length of text
         mJournal.addTextChangedListener(watcher);
