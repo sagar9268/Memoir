@@ -1,3 +1,4 @@
+![App Icon](https://github.com/sagar9268/Memoir/blob/master/Memoir/app/src/main/res/mipmap-xhdpi/ic_launcher.png)
 # Memoir
 A simple and easy to use app to keep your journal entries in an interesting way.
 
